@@ -4,16 +4,40 @@
 
 .main-container {
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(16, 40px);
-  grid-template-rows: repeat(16, 40px);
   gap: 2px;
+
+  height: 800px;
+  width: 800px;
 }
 
-.grid-container > div {
+.grid-container-16 {
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(16, 1fr);
+}
+
+.grid-container-32 {
+  grid-template-columns: repeat(32, 1fr);
+  grid-template-rows: repeat(32, 1fr);
+}
+
+.grid-container-64 {
+  grid-template-columns: repeat(64, 1fr);
+  grid-template-rows: repeat(64, 1fr);
+}
+
+.grid-item {
   background-color: gainsboro;
+}
+
+.colored {
+  background-color: rgb(66, 66, 66);
+}
+
+.grid-size-container {
+  margin-bottom: 20px;
 }
