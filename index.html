@@ -11,10 +11,16 @@
   <body>
     <div class="main-container">
       <h1>Etch-a-Sketch</h1>
-      <div class="grid-size-container">
-        <button class="btn btn-size-16">16x16</button>
-        <button class="btn btn-size-32">32x32</button>
-        <button class="btn btn-size-64">64x64</button>
+      <div class="grid-options-container">
+        <div class="btn-container">
+          <button class="btn btn-size-16">16x16</button>
+          <button class="btn btn-size-32">32x32</button>
+          <button class="btn btn-size-64">64x64</button>
+        </div>
+        <div>
+          <label for="color">Choose color</label>
+          <input type="color" id="color" name="color" />
+        </div>
       </div>
       <div class="grid-container"></div>
     </div>

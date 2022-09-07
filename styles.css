@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 .main-container {
   max-width: 800px;
   margin: 0 auto;
@@ -10,34 +14,25 @@
 .grid-container {
   display: grid;
   gap: 2px;
-
   height: 800px;
   width: 800px;
 }
 
-.grid-container-16 {
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(16, 1fr);
+.grid-options-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.grid-container-32 {
-  grid-template-columns: repeat(32, 1fr);
-  grid-template-rows: repeat(32, 1fr);
-}
-
-.grid-container-64 {
-  grid-template-columns: repeat(64, 1fr);
-  grid-template-rows: repeat(64, 1fr);
+.btn {
+  font-size: 1rem;
+  padding: 8px 16px 8px 16px;
 }
 
 .grid-item {
-  background-color: gainsboro;
+  background-color: rgb(220, 220, 220);
 }
 
 .colored {
   background-color: rgb(66, 66, 66);
-}
-
-.grid-size-container {
-  margin-bottom: 20px;
 }
