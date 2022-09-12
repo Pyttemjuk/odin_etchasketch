@@ -7,21 +7,25 @@ html {
 }
 
 .main-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .grid-container {
   display: grid;
   gap: 2px;
-  height: 800px;
-  width: 800px;
+  height: 600px;
+  width: 600px;
 }
 
 .grid-options-container {
   display: flex;
-  justify-content: space-between;
+  gap: 5px;
   margin-bottom: 10px;
+}
+
+.last-item {
+  margin-left: auto;
 }
 
 .btn {
@@ -31,8 +35,4 @@ html {
 
 .grid-item {
   background-color: rgb(220, 220, 220);
-}
-
-.colored {
-  background-color: rgb(66, 66, 66);
 }

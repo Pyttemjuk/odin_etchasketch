@@ -2,19 +2,25 @@ const gridContainer = document.querySelector('.grid-container')
 const btnSize16 = document.querySelector('.btn-size-16')
 const btnSize32 = document.querySelector('.btn-size-32')
 const btnSize64 = document.querySelector('.btn-size-64')
+const btnEraser = document.querySelector('.btn-eraser')
+const btnClear = document.querySelector('.btn-clear')
 const colorPicker = document.querySelector('#color')
 
-const defaultColor = '#424242'
-const defaultSize = 16
+const DEFAULT_COLOR = '#424242'
+const DEFAULT_SIZE = 16
+const ERASER_COLOR = '#dcdcdc'
 
+// Size of grid
+let size
 // Color from color picker
-let currentColor = defaultColor
-colorPicker.value = defaultColor
+let currentColor
+// Eraser on
+let erase = false
 
-function createGrid(size, color) {
+function createGrid() {
   clearGrid()
-  createGridItems(size)
-  setColor(color)
+  createGridItems()
+  setColor()
 }
 
 function clearGrid() {
@@ -23,7 +29,7 @@ function clearGrid() {
   }
 }
 
-function createGridItems(size) {
+function createGridItems() {
   for (let i = 0; i < size * size; i++) {
     const gridItem = document.createElement('div')
     gridItem.classList.add('grid-item')
@@ -31,43 +37,77 @@ function createGridItems(size) {
   }
 }
 
-function setColor(color) {
+function setColor() {
   const gridItem = document.querySelectorAll('.grid-item')
   gridItem.forEach((item) =>
-    item.addEventListener('mousedown', () => {
-      item.style.setProperty('background-color', color)
+    item.addEventListener('mouseenter', () => {
+      item.style.setProperty('background-color', currentColor)
     })
   )
 }
 
 // Default values for grid
 function init() {
-  createGrid(16, defaultColor)
+  size = DEFAULT_SIZE
+  currentColor = DEFAULT_COLOR
+  colorPicker.value = DEFAULT_COLOR
+  createGrid()
   gridContainer.style.setProperty(
     'grid-template-columns',
-    `repeat(${defaultSize}, 1fr)`
+    `repeat(${DEFAULT_SIZE}, 1fr)`
   )
 }
 
 /* --- Event listeners --- */
 btnSize16.addEventListener('click', () => {
-  createGrid(16, currentColor)
-  gridContainer.style.setProperty('grid-template-columns', 'repeat(16, 1fr)')
+  size = 16
+  createGrid()
+  gridContainer.style.setProperty(
+    'grid-template-columns',
+    `repeat(${size}, 1fr)`
+  )
 })
 
 btnSize32.addEventListener('click', () => {
-  createGrid(32, currentColor)
-  gridContainer.style.setProperty('grid-template-columns', 'repeat(32, 1fr)')
+  size = 32
+  createGrid()
+  gridContainer.style.setProperty(
+    'grid-template-columns',
+    `repeat(${size}, 1fr)`
+  )
 })
 
 btnSize64.addEventListener('click', () => {
-  createGrid(64, currentColor)
-  gridContainer.style.setProperty('grid-template-columns', 'repeat(64, 1fr)')
+  size = 64
+  createGrid()
+  gridContainer.style.setProperty(
+    'grid-template-columns',
+    `repeat(${size}, 1fr)`
+  )
+})
+
+btnEraser.addEventListener('click', () => {
+  erase ? (erase = false) : (erase = true)
+
+  if (erase) {
+    currentColor = ERASER_COLOR
+    btnEraser.textContent = 'Draw'
+  } else {
+    currentColor = colorPicker.value
+    btnEraser.textContent = 'Erase'
+  }
+
+  setColor()
+})
+
+btnClear.addEventListener('click', () => {
+  clearGrid()
+  createGrid()
 })
 
 colorPicker.addEventListener('input', (e) => {
   currentColor = e.target.value
-  setColor(currentColor)
+  setColor()
 })
 
 /* --- Initiate default values --- */
