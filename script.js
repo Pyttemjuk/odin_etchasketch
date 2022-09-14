@@ -16,6 +16,8 @@ let size
 let currentColor
 // Eraser on
 let erase = false
+// Color items if true
+let mousedown = false
 
 function createGrid() {
   clearGrid()
@@ -37,13 +39,24 @@ function createGridItems() {
   }
 }
 
+function colorItems(e, item) {
+  // Prevent default behavior "grab"
+  e.preventDefault()
+  item.style.setProperty('background-color', currentColor)
+}
+
 function setColor() {
   const gridItem = document.querySelectorAll('.grid-item')
-  gridItem.forEach((item) =>
-    item.addEventListener('mouseenter', () => {
-      item.style.setProperty('background-color', currentColor)
+  gridItem.forEach((item) => {
+    item.addEventListener('mousedown', (e) => {
+      colorItems(e, item)
     })
-  )
+    item.addEventListener('mouseenter', (e) => {
+      if (mousedown) {
+        colorItems(e, item)
+      }
+    })
+  })
 }
 
 // Default values for grid
@@ -59,6 +72,10 @@ function init() {
 }
 
 /* --- Event listeners --- */
+
+document.addEventListener('mousedown', () => (mousedown = true))
+document.addEventListener('mouseup', () => (mousedown = false))
+
 btnSize16.addEventListener('click', () => {
   size = 16
   createGrid()
@@ -101,8 +118,10 @@ btnEraser.addEventListener('click', () => {
 })
 
 btnClear.addEventListener('click', () => {
-  clearGrid()
-  createGrid()
+  const gridItem = document.querySelectorAll('.grid-item')
+  gridItem.forEach((item) =>
+    item.style.setProperty('background-color', ERASER_COLOR)
+  )
 })
 
 colorPicker.addEventListener('input', (e) => {
