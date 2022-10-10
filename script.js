@@ -2,20 +2,21 @@ const gridContainer = document.querySelector('.grid-container')
 const btnSize16 = document.querySelector('.btn-size-16')
 const btnSize32 = document.querySelector('.btn-size-32')
 const btnSize64 = document.querySelector('.btn-size-64')
-const btnEraser = document.querySelector('.btn-eraser')
+const btnGridSizeAll = document.querySelectorAll('.btn-grid-sizes')
+const btnDraw = document.querySelector('.btn-draw')
+const btnErase = document.querySelector('.btn-erase')
 const btnClear = document.querySelector('.btn-clear')
-const colorPicker = document.querySelector('#color')
+const btnGridOptions = document.querySelectorAll('.btn-grid-options')
+const colorPicker = document.querySelector('#color-picker')
 
-const DEFAULT_COLOR = '#424242'
+const GRID_ITEM_COLOR = '#dcdcdc'
+const DEFAULT_DRAW_COLOR = '#5DD089'
 const DEFAULT_SIZE = 16
-const ERASER_COLOR = '#dcdcdc'
 
 // Size of grid
 let size
 // Color from color picker
 let currentColor
-// Eraser on
-let erase = false
 // Color items if true
 let mousedown = false
 
@@ -35,6 +36,7 @@ function createGridItems() {
   for (let i = 0; i < size * size; i++) {
     const gridItem = document.createElement('div')
     gridItem.classList.add('grid-item')
+    gridItem.style.setProperty('background-color', GRID_ITEM_COLOR)
     gridContainer.appendChild(gridItem)
   }
 }
@@ -59,11 +61,18 @@ function setColor() {
   })
 }
 
+function colorChange(e) {
+  currentColor = e.target.value
+  setColor()
+}
+
 // Default values for grid
 function init() {
   size = DEFAULT_SIZE
-  currentColor = DEFAULT_COLOR
-  colorPicker.value = DEFAULT_COLOR
+  currentColor = DEFAULT_DRAW_COLOR
+  colorPicker.value = DEFAULT_DRAW_COLOR
+  btnSize16.classList.add('active')
+  btnDraw.classList.add('active')
   createGrid()
   gridContainer.style.setProperty(
     'grid-template-columns',
@@ -77,6 +86,8 @@ document.addEventListener('mousedown', () => (mousedown = true))
 document.addEventListener('mouseup', () => (mousedown = false))
 
 btnSize16.addEventListener('click', () => {
+  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  btnSize16.classList.add('active')
   size = 16
   createGrid()
   gridContainer.style.setProperty(
@@ -86,6 +97,8 @@ btnSize16.addEventListener('click', () => {
 })
 
 btnSize32.addEventListener('click', () => {
+  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  btnSize32.classList.add('active')
   size = 32
   createGrid()
   gridContainer.style.setProperty(
@@ -95,6 +108,8 @@ btnSize32.addEventListener('click', () => {
 })
 
 btnSize64.addEventListener('click', () => {
+  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  btnSize64.classList.add('active')
   size = 64
   createGrid()
   gridContainer.style.setProperty(
@@ -103,31 +118,25 @@ btnSize64.addEventListener('click', () => {
   )
 })
 
-btnEraser.addEventListener('click', () => {
-  erase ? (erase = false) : (erase = true)
+btnDraw.addEventListener('click', () => {
+  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  btnDraw.classList.add('active')
+})
 
-  if (erase) {
-    currentColor = ERASER_COLOR
-    btnEraser.textContent = 'Draw'
-  } else {
-    currentColor = colorPicker.value
-    btnEraser.textContent = 'Erase'
-  }
-
-  setColor()
+btnErase.addEventListener('click', () => {
+  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  btnErase.classList.add('active')
 })
 
 btnClear.addEventListener('click', () => {
   const gridItem = document.querySelectorAll('.grid-item')
   gridItem.forEach((item) =>
-    item.style.setProperty('background-color', ERASER_COLOR)
+    item.style.setProperty('background-color', GRID_ITEM_COLOR)
   )
 })
 
-colorPicker.addEventListener('input', (e) => {
-  currentColor = e.target.value
-  setColor()
-})
+colorPicker.addEventListener('input', (e) => colorChange(e))
+colorPicker.addEventListener('change', (e) => colorChange(e))
 
 /* --- Initiate default values --- */
 init()
