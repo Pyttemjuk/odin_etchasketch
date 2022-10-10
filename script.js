@@ -51,11 +51,21 @@ function changeSize(newSize) {
   )
 }
 
-function removeActive() {
+function setDrawActive() {
   btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  btnDraw.classList.add('active')
+  currentColor = colorPicker.value
+  setColor()
 }
 
-function colorItems(e, item) {
+function setEraseActive() {
+  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  btnErase.classList.add('active')
+  currentColor = GRID_ITEM_COLOR
+  setColor()
+}
+
+function itemColor(e, item) {
   // Prevent default behavior "grab"
   e.preventDefault()
   item.style.setProperty('background-color', currentColor)
@@ -65,22 +75,23 @@ function setColor() {
   const gridItem = document.querySelectorAll('.grid-item')
   gridItem.forEach((item) => {
     item.addEventListener('mousedown', (e) => {
-      colorItems(e, item)
+      itemColor(e, item)
     })
     item.addEventListener('mouseenter', (e) => {
       if (mousedown) {
-        colorItems(e, item)
+        itemColor(e, item)
       }
     })
   })
 }
 
 function colorChange(e) {
+  setDrawActive()
   currentColor = e.target.value
   setColor()
 }
 
-// Default values for grid
+/* --- Default values for grid --- */
 function init() {
   size = DEFAULT_SIZE
   currentColor = DEFAULT_DRAW_COLOR
@@ -115,16 +126,15 @@ btnSize64.addEventListener('click', () => {
 })
 
 btnDraw.addEventListener('click', () => {
-  removeActive()
-  btnDraw.classList.add('active')
+  setDrawActive()
 })
 
 btnErase.addEventListener('click', () => {
-  removeActive()
-  btnErase.classList.add('active')
+  setEraseActive()
 })
 
 btnClear.addEventListener('click', () => {
+  setDrawActive()
   const gridItem = document.querySelectorAll('.grid-item')
   gridItem.forEach((item) =>
     item.style.setProperty('background-color', GRID_ITEM_COLOR)
