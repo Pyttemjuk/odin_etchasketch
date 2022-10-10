@@ -21,12 +21,12 @@ let currentColor
 let mousedown = false
 
 function createGrid() {
-  clearGrid()
+  removeGrid()
   createGridItems()
   setColor()
 }
 
-function clearGrid() {
+function removeGrid() {
   while (gridContainer.firstChild) {
     gridContainer.removeChild(gridContainer.firstChild)
   }
@@ -39,6 +39,20 @@ function createGridItems() {
     gridItem.style.setProperty('background-color', GRID_ITEM_COLOR)
     gridContainer.appendChild(gridItem)
   }
+}
+
+function changeSize(newSize) {
+  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  size = newSize
+  createGrid()
+  gridContainer.style.setProperty(
+    'grid-template-columns',
+    `repeat(${size}, 1fr)`
+  )
+}
+
+function removeActive() {
+  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
 }
 
 function colorItems(e, item) {
@@ -86,45 +100,27 @@ document.addEventListener('mousedown', () => (mousedown = true))
 document.addEventListener('mouseup', () => (mousedown = false))
 
 btnSize16.addEventListener('click', () => {
-  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  changeSize(16)
   btnSize16.classList.add('active')
-  size = 16
-  createGrid()
-  gridContainer.style.setProperty(
-    'grid-template-columns',
-    `repeat(${size}, 1fr)`
-  )
 })
 
 btnSize32.addEventListener('click', () => {
-  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  changeSize(32)
   btnSize32.classList.add('active')
-  size = 32
-  createGrid()
-  gridContainer.style.setProperty(
-    'grid-template-columns',
-    `repeat(${size}, 1fr)`
-  )
 })
 
 btnSize64.addEventListener('click', () => {
-  btnGridSizeAll.forEach((btn) => btn.classList.remove('active'))
+  changeSize(64)
   btnSize64.classList.add('active')
-  size = 64
-  createGrid()
-  gridContainer.style.setProperty(
-    'grid-template-columns',
-    `repeat(${size}, 1fr)`
-  )
 })
 
 btnDraw.addEventListener('click', () => {
-  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  removeActive()
   btnDraw.classList.add('active')
 })
 
 btnErase.addEventListener('click', () => {
-  btnGridOptions.forEach((btn) => btn.classList.remove('active'))
+  removeActive()
   btnErase.classList.add('active')
 })
 
