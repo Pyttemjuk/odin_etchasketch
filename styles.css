@@ -25,6 +25,8 @@ body {
     var(--first-bg-color),
     var(--second-bg-color)
   );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   min-height: 100vh;
