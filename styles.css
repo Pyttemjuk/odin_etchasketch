@@ -143,3 +143,31 @@ label {
 .grid-item {
   background-color: var(--grid-item-bg-color);
 }
+
+@media (max-width: 800px) {
+  .grid-options-container {
+    gap: 5px;
+  }
+
+  .grid-container {
+    border: 3px solid var(--grid-bg-color);
+    height: 400px;
+    width: 400px;
+  }
+
+  .btn {
+    padding: 5px 3px;
+  }
+}
+
+@media (max-width: 540px) {
+  .grid-options-container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .grid-container {
+    height: 300px;
+    width: 300px;
+  }
+}
